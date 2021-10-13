@@ -1,23 +1,23 @@
 import React, { useState } from 'react'
 import './Login.css'
+import { useHistory } from "react-router-dom";
 
-const initialValue = { username: "", password: "" }
+const initial = { username: "", password: "" }
 
 function Login() {
 
-    const [value, setValue] = useState(initialValue);
+    const [value, setValue] = useState(initial);
+    const history = useHistory();
 
     const login = () => {
-
-        const data = {
-            "email": value.username,
-            "password": value.password,
-        }
 
         const options = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(data)
+            body: JSON.stringify({
+                email: value.username,
+                password: value.password
+            })
         }
 
         const fetchRes = fetch("https://reqres.in/api/login", options)
@@ -29,11 +29,12 @@ function Login() {
         e.preventDefault();
         response.then(res => res.json()).then(data => {
             if (data.token) {
-                alert("Login sucessful");
-                setValue(initialValue);
+                setValue(initial);
+                history.push("/signup");
             }
             else {
                 alert(data.error);
+                setValue(initial);
             }
         })
     }

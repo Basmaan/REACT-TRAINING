@@ -1,10 +1,9 @@
-import Login from "./LoginPage/Login";
-
+import Routes from "./Routes";
 
 function App() {
   return (
     <div>
-      <Login />
+      <Routes />
     </div>
   );
 }
